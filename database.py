@@ -26,7 +26,7 @@ def export_to_sqlite():
 
     # 2. Работа c xlsx файлом
 
-    # Читаем файл и лист1 книги excel
+    # Читаем файл и Лист1 книги excel
     file_to_read = openpyxl.load_workbook('dataset cryptotypes.xlsx', data_only=True)
     sheet = file_to_read['Лист1']
 
@@ -35,7 +35,7 @@ def export_to_sqlite():
     for row in range(2, sheet.max_row + 1):
         # Объявление списка
         data = []
-        # Цикл по столбцам от 1 до 4 ( 5 не включая)
+        # Цикл по столбцам от 1 до 8 ( 8 не включая)
         for col in range(1, 8):
             # value содержит значение ячейки с координатами row col
             value = sheet.cell(row, col).value
