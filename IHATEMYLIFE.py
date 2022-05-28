@@ -10,9 +10,9 @@ class Net(nn.Module):
         super(Net, self).__init__()
         g = FFUFUDUFUFUF()
         love = DataLoader(g, batch_size=7, shuffle=True)
-        self.fc1 = nn.Transformer(love, 200)
-        self.fc2 = nn.Linear(200, 200)
-        self.fc3 = nn.Linear(200, 10)
+        self.fc1 = nn.Transformer(love, 100)
+        self.fc2 = nn.Linear(100, 50)
+        self.fc3 = nn.Linear(50, 2)
 
     def forward(self, x):
         x = f.relu(self.fc1(x))
