@@ -3,16 +3,15 @@ import torch.nn.functional as f
 import torch.optim as optim
 from gisi import FFUFUDUFUFUF
 from torch.utils.data import DataLoader
+from ignite.engine import Engine, _prepare_batch
 
 
 class Net(nn.Module):
-    def __init__(self):
+    def __init__(self, love):
         super(Net, self).__init__()
-        g = FFUFUDUFUFUF()
-        love = DataLoader(g, batch_size=7, shuffle=True)
-        self.fc1 = nn.Transformer(love, 100)
-        self.fc2 = nn.Linear(100, 50)
-        self.fc3 = nn.Linear(50, 2)
+        self.fc1 = nn.Transformer(love, 200)
+        self.fc2 = nn.Linear(200, 200)
+        self.fc3 = nn.Linear(200, 10)
 
     def forward(self, x):
         x = f.relu(self.fc1(x))
@@ -21,7 +20,19 @@ class Net(nn.Module):
         return f.log_softmax(x)
 
 
-net = Net()
-optimizer = optim.SGD(net.parameters(), lr=0.01, momentum=0.9)
-losser = nn.NLLLoss()
-print(losser)
+g = FFUFUDUFUFUF()
+love = DataLoader(g, batch_size=7, shuffle=True)
+net = Net(love)
+lossfunc = nn.CrossEntropyLoss()
+optimizer = optim.Adam(net.parameters(), lr=0.001)
+
+
+def process_function(engine, batch, love):
+    love.train()
+    optimizer.zero_grad()
+    x, y = _prepare_batch(batch)
+    y_pred = love(x)
+    loss = lossfunc(y_pred, y)
+    loss.backward()
+    optimizer.step()
+    return loss.item()
