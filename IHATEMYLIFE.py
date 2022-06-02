@@ -21,10 +21,11 @@ class Net(nn.Module):
 
 
 g = FFUFUDUFUFUF()
-love = DataLoader(g, batch_size=7, shuffle=True)
+love = DataLoader(g, batch_size=7, shuffle=True, num_workers=3, )
 net = Net(love)
 lossfunc = nn.CrossEntropyLoss()
 optimizer = optim.Adam(net.parameters(), lr=0.001)
+print('Done!')
 
 
 def process_function(engine, batch, love):
@@ -36,3 +37,6 @@ def process_function(engine, batch, love):
     loss.backward()
     optimizer.step()
     return loss.item()
+
+
+trainer = Engine(process_function)
