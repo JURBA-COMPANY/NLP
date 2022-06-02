@@ -24,7 +24,6 @@ class FFUFUDUFUFUF(Dataset):
             for word in i:
                 g = w2v_model.wv[word]
                 self.sent.append(torch.tensor(g))
-                break
 
     def __len__(self):
         return len(self.sent)
